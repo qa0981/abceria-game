@@ -6,7 +6,7 @@ from menu import GameScreen
 from menu import LevelSelectionScreen
 from draw import PaintScreen
 from kivy.core.audio import SoundLoader
-
+  
 
 class PaintApp(App):
     def __init__(self, **kwargs):
