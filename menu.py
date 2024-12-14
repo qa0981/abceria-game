@@ -37,18 +37,15 @@ class GameScreen(Screen):
         print("Game 5 clicked!")
         self.manager.current = "game5"
 
+    def update_coin_count(self, new_coin_count):
+        self.coin_count = str(new_coin_count)
+
+    def update_username(self, new_username):
+        self.username = new_username
+
 class LevelSelectionScreen(Screen):
+    coin_count = StringProperty("100")
+    username = StringProperty("Username")
+
     def select_level(self, level):
         print(f"Level {level} selected!")
-        # Navigate or load the selected level
-        # For example:
-        if level == 1:
-            self.manager.current = "level1"
-        elif level == 2:
-            self.manager.current = "level2"
-        elif level == 3:
-            self.manager.current = "level3"
-
-    def go_back(self):
-        print("Returning to game screen")
-        self.manager.current = "game"

@@ -1,43 +1,24 @@
-from kivy.lang import Builder
+from kivy.app import App
+from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.properties import StringProperty
 
-from kivymd.app import MDApp
+class LevelSelectionScreen(Screen):
+    coin_count = StringProperty("100")
+    username = StringProperty("Player")
 
-KV = '''
-<MagicButton@MagicBehavior+MDRectangleFlatButton>
+    def select_level(self, level):
+        print(f"Level {level} selected!")
+        # Add logic to transition to the selected level's screen
 
-
-MDFloatLayout:
-
-    MagicButton:
-        text: "WOBBLE EFFECT"
-        on_release: self.wobble()
-        pos_hint: {"center_x": .5, "center_y": .3}
-
-    MagicButton:
-        text: "GROW EFFECT"
-        on_release: self.grow()
-        pos_hint: {"center_x": .5, "center_y": .4}
-
-    MagicButton:
-        text: "SHAKE EFFECT"
-        on_release: self.shake()
-        pos_hint: {"center_x": .5, "center_y": .5}
-
-    MagicButton:
-        text: "TWIST EFFECT"
-        on_release: self.twist()
-        pos_hint: {"center_x": .5, "center_y": .6}
-
-    MagicButton:
-        text: "SHRINK EFFECT"
-        on_release: self.shrink()
-        pos_hint: {"center_x": .5, "center_y": .7}
-'''
-
-
-class Example(MDApp):
+class MainApp(App):
     def build(self):
-        return Builder.load_string(KV)
+        sm = ScreenManager()
 
+        # Adding LevelSelectionScreen to ScreenManager
+        level_selection_screen = LevelSelectionScreen(name="level_selection")
+        sm.add_widget(level_selection_screen)
 
-Example().run()
+        return sm
+
+if __name__ == "__main__":
+    MainApp().run()

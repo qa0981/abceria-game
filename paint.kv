@@ -283,45 +283,127 @@
                     on_press: root.start_game5()
 
 <LevelSelectionScreen>:
-    BoxLayout:
-        orientation: "vertical"
-        spacing: 20
-        padding: 10
+    coin_count: "100"
+    username: "Player"
+
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                source: "image/bg_next.png"
+                size: self.size
+                pos: self.pos
 
         Label:
             text: "Select a Level"
-            font_size: 32
+            font_size: 48
+            font_name: "fonts/SplashBakery.otf"
+            bold: True
+            color: (255 / 255, 255 / 255, 255 / 255, 1)  # White in RGB
             size_hint_y: None
-            height: 50
+            height: 100
+            pos_hint: {"center_x": 0.5, "top": 0.98}  # Align the label to the top of the screen
+            halign: "center"
+            valign: "middle"
+            text_size: self.size
 
-        BoxLayout:
-            orientation: "horizontal"
-            spacing: 10
+        FloatLayout:
+            size_hint: None, None
+            size: 150, 50
+            pos_hint: {"x": 0.02, "top": 0.98}
+            canvas.before:
+                Color:
+                    rgba: (217 / 255, 162 / 255, 67 / 255, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [25]
 
-            ClickableImage:
-                source: "image/menu1.png"  # Replace with actual image
+            Image:
+                source: "buttons/koin.png"
                 size_hint: None, None
-                size: 100, 100
-                on_release: root.select_level(1)
+                size: 40, 40
+                pos_hint: {"x": 0.05, "center_y": 0.5}
+                allow_stretch: True
 
-            ClickableImage:
-                source: "image/menu1.png"  # Replace with actual image
+            Label:
+                text: root.coin_count
+                font_size: 54
+                font_name: "fonts/SplashBakery.otf"
+                color: (255 / 255, 222 / 255, 169 / 255, 1)
                 size_hint: None, None
-                size: 100, 100
-                on_release: root.select_level(2)
+                size: 110, 50
+                pos_hint: {"x": 0.5, "center_y": 0.5}
+                halign: "left"
+                valign: "middle"
+                text_size: self.size
 
-            ClickableImage:
-                source: "image/menu1.png"  # Replace with actual image
+        FloatLayout:
+            size_hint: None, None
+            size: 300, 50
+            pos_hint: {"right": 0.98, "top": 0.98}
+            canvas.before:
+                Color:
+                    rgba: (217 / 255, 162 / 255, 67 / 255, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [25]
+
+            Image:
+                source: "buttons/tameng.png"
                 size_hint: None, None
-                size: 100, 100
-                on_release: root.select_level(3)
+                size: 40, 40
+                pos_hint: {"x": 0.05, "center_y": 0.5}
+                allow_stretch: True
+
+            Label:
+                text: root.username
+                font_size: 54
+                font_name: "fonts/SplashBakery.otf"
+                color: (255 / 255, 222 / 255, 169 / 255, 1)
+                size_hint: None, None
+                size: 200, 50
+                pos_hint: {"x": 0.3, "center_y": 0.5}
+                halign: "left"
+                valign: "middle"
+                text_size: self.size
 
         ClickableImage:
             source: "buttons/arrow_left.png"
             size_hint: None, None
             size: 100, 100
             pos_hint: {"x": 0.02, "y": 0.02}
-            on_release: app.root.current = "game"
+            on_press: root.go_to_start_menu()
+
+        FloatLayout:
+            size_hint: None, None
+            size: 900, 450
+            pos_hint: {"center_x": 0.49, "center_y": 0.35}
+
+            GridLayout:
+                cols: 3
+                spacing: 30
+                size_hint: None, None
+                size: 900, 180
+                pos_hint: {"center_x": 0.5, "top": 1}
+
+                ClickableImage:
+                    source: "buttons/button_level/1.png"
+                    size_hint: None, None
+                    size: 320, 200
+                    on_release: root.select_level(1)
+
+                ClickableImage:
+                    source: "buttons/button_level/1.png"
+                    size_hint: None, None
+                    size: 320, 200
+                    on_release: root.select_level(2)
+
+                ClickableImage:
+                    source: "buttons/button_level/1.png"
+                    size_hint: None, None
+                    size: 320, 200
+                    on_release: root.select_level(3)
 
 <NameInputScreen>:
     canvas.before:
