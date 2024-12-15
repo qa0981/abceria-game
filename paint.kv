@@ -226,12 +226,12 @@
                 valign: "middle"
                 text_size: self.size
 
-        ClickableImage:
+        MagicImage:
             source: "buttons/arrow_left.png"
             size_hint: None, None
             size: 100, 100
             pos_hint: {"x": 0.02, "y": 0.02}
-            on_press: root.go_to_start_menu()
+            on_release: self.wobble_and_navigate(root.go_to_start_menu)
 
         FloatLayout:
             size_hint: None, None
@@ -249,7 +249,7 @@
                     source: "image/menu1.png"
                     size_hint: None, None
                     size: 320, 200
-                    on_press: root.start_game1()
+                    on_release: root.show_popup()
 
                 ClickableImage:
                     source: "image/menu1.png"
@@ -282,128 +282,43 @@
                     size: 320, 200
                     on_press: root.start_game5()
 
-<LevelSelectionScreen>:
-    coin_count: "100"
-    username: "Player"
+<LevelSelectionPopup>:
+    size_hint: 0.8, 0.7
+    auto_dismiss: False
+    title: ""
+    separator_color: 0, 0, 0, 0
+    separator_height: 0
+    background: "image/bgp.png"
 
     FloatLayout:
-        canvas.before:
-            Rectangle:
-                source: "image/bg_next.png"
-                size: self.size
-                pos: self.pos
+        Image:
+            source: "image/title/1.png"
+            size_hint: 0.8, 0.2
+            pos_hint: {"center_x": 0.5, "top": 1}
 
-        Label:
-            text: "Select a Level"
-            font_size: 48
-            font_name: "fonts/SplashBakery.otf"
-            bold: True
-            color: (255 / 255, 255 / 255, 255 / 255, 1)  # White in RGB
-            size_hint_y: None
-            height: 100
-            pos_hint: {"center_x": 0.5, "top": 0.98}  # Align the label to the top of the screen
-            halign: "center"
-            valign: "middle"
-            text_size: self.size
+        GridLayout:
+            cols: 3
+            spacing: 25
+            size_hint: 0.8, 0.5
+            pos_hint: {"center_x": 0.55, "top": 0.1}
 
-        FloatLayout:
-            size_hint: None, None
-            size: 150, 50
-            pos_hint: {"x": 0.02, "top": 0.98}
-            canvas.before:
-                Color:
-                    rgba: (217 / 255, 162 / 255, 67 / 255, 1)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-                    radius: [25]
-
-            Image:
-                source: "buttons/koin.png"
+            Button:
+                background_normal: "buttons/button_level/1.png"
                 size_hint: None, None
-                size: 40, 40
-                pos_hint: {"x": 0.05, "center_y": 0.5}
-                allow_stretch: True
+                size: 150, 100
+                on_release: root.select_level(1)
 
-            Label:
-                text: root.coin_count
-                font_size: 54
-                font_name: "fonts/SplashBakery.otf"
-                color: (255 / 255, 222 / 255, 169 / 255, 1)
+            Button:
+                background_normal: "buttons/button_level/1.png"
                 size_hint: None, None
-                size: 110, 50
-                pos_hint: {"x": 0.5, "center_y": 0.5}
-                halign: "left"
-                valign: "middle"
-                text_size: self.size
+                size: 150, 100
+                on_release: root.select_level(2)
 
-        FloatLayout:
-            size_hint: None, None
-            size: 300, 50
-            pos_hint: {"right": 0.98, "top": 0.98}
-            canvas.before:
-                Color:
-                    rgba: (217 / 255, 162 / 255, 67 / 255, 1)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-                    radius: [25]
-
-            Image:
-                source: "buttons/tameng.png"
+            Button:
+                background_normal: "buttons/button_level/1.png"
                 size_hint: None, None
-                size: 40, 40
-                pos_hint: {"x": 0.05, "center_y": 0.5}
-                allow_stretch: True
-
-            Label:
-                text: root.username
-                font_size: 54
-                font_name: "fonts/SplashBakery.otf"
-                color: (255 / 255, 222 / 255, 169 / 255, 1)
-                size_hint: None, None
-                size: 200, 50
-                pos_hint: {"x": 0.3, "center_y": 0.5}
-                halign: "left"
-                valign: "middle"
-                text_size: self.size
-
-        ClickableImage:
-            source: "buttons/arrow_left.png"
-            size_hint: None, None
-            size: 100, 100
-            pos_hint: {"x": 0.02, "y": 0.02}
-            on_press: root.go_to_start_menu()
-
-        FloatLayout:
-            size_hint: None, None
-            size: 900, 450
-            pos_hint: {"center_x": 0.49, "center_y": 0.35}
-
-            GridLayout:
-                cols: 3
-                spacing: 30
-                size_hint: None, None
-                size: 900, 180
-                pos_hint: {"center_x": 0.5, "top": 1}
-
-                ClickableImage:
-                    source: "buttons/button_level/1.png"
-                    size_hint: None, None
-                    size: 320, 200
-                    on_release: root.select_level(1)
-
-                ClickableImage:
-                    source: "buttons/button_level/1.png"
-                    size_hint: None, None
-                    size: 320, 200
-                    on_release: root.select_level(2)
-
-                ClickableImage:
-                    source: "buttons/button_level/1.png"
-                    size_hint: None, None
-                    size: 320, 200
-                    on_release: root.select_level(3)
+                size: 150, 100
+                on_release: root.select_level(3)
 
 <NameInputScreen>:
     canvas.before:
