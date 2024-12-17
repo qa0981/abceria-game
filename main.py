@@ -25,9 +25,9 @@ class PaintApp(App):
         sm = ScreenManager()
         # sm.add_widget(NameInputScreen(name="name_input"))
         # sm.add_widget(StartScreen(name="start"))
-        sm.add_widget(GameScreen(name="game"))
+        # sm.add_widget(GameScreen(name="game"))
         # sm.add_widget(LevelSelectionScreen(name="level_selection"))
-        # sm.add_widget(PaintScreen(name="paint"))
+        sm.add_widget(PaintScreen(name="paint"))
         return sm
     
     def on_stop(self):
