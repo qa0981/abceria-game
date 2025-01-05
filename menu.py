@@ -7,6 +7,7 @@ from kivy.properties import StringProperty
 from kivy.animation import Animation
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.app import App
 from kivymd.app import MDApp
 from kivy.lang import Builder
 
@@ -26,8 +27,8 @@ class GameScreen(Screen):
         self.manager.current = "start"
 
     def start_game1(self):
-        print("Game 1 clicked!")
-        self.show_popup()
+        print("Navigating to Game 1!")
+        self.manager.current = "game1"
 
     def start_game2(self):
         print("Game 2 clicked!")
@@ -45,9 +46,9 @@ class GameScreen(Screen):
         print("Game 5 clicked!")
         self.manager.current = "game5"
 
-    def show_popup(self):
-        popup = LevelSelectionPopup()
-        popup.open()
+    # def show_popup(self):
+    #     popup = LevelSelectionPopup()
+    #     popup.open()
 
     def update_coin_count(self, new_coin_count):
         self.coin_count = str(new_coin_count)
@@ -55,14 +56,19 @@ class GameScreen(Screen):
     def update_username(self, new_username):
         self.username = new_username
 
-class LevelSelectionPopup(Popup):
-    coin_count = StringProperty("100")
-    username = StringProperty("Player")
+# class LevelSelectionPopup(Popup):
+#     coin_count = StringProperty("100")
+#     username = StringProperty("Player")
 
-    def select_level(self, level):
-        print(f"Level {level} selected!")
-        self.dismiss()
-
+#     def select_level(self, level):
+#         app = App.get_running_app()
+#         if level == 1:
+#             app.root.current = "gameone"
+#         elif level == 2:
+#             app.root.current = "gametwo"
+#         elif level == 3:
+#             app.root.current = "tracing"
+#         self.dismiss()
 class MyApp(MDApp):
     def build(self):
         return Builder.load_file("paint.kv")

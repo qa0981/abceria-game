@@ -249,7 +249,7 @@
                     source: "image/menu1.png"
                     size_hint: None, None
                     size: 320, 200
-                    on_release: root.show_popup()
+                    on_release: root.start_game1()
 
                 ClickableImage:
                     source: "image/menu1.png"
@@ -281,6 +281,52 @@
                     size_hint: None, None
                     size: 320, 200
                     on_press: root.start_game5()
+
+<Game1Screen>:
+    BoxLayout:
+        orientation: "vertical"
+
+        BoxLayout:
+            size_hint: 1, 0.1
+            padding: 10
+
+            Label:
+                text: "Game 1"
+                font_size: 24
+
+            Button:
+                text: "Back"
+                size_hint: None, None
+                size: 100, 50
+                on_press: root.go_back()
+
+        GridLayout:
+            cols: 5
+            spacing: 10
+            padding: 20
+
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/1.mp3"
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/2.mp3"
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/3.mp3"
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/4.mp3"
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/5.mp3"
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/6.mp3"
+            ImageButton:
+                source: "image/huruf/button/a.png"
+                sound_path: "image/voice_ alfabet/7.mp3"
+            
 
 <LevelSelectionPopup>:
     size_hint: 0.8, 0.8
@@ -327,6 +373,34 @@
             background_color: app.rgb(217, 162, 67)
             color: app.rgb(255, 255, 255)
             on_release: root.dismiss()
+
+<TracingScreen>:
+    name: "tracing"
+
+    FloatLayout:
+        Image:
+            source: "image/bab1/jiplak/a.png"
+            size_hint: None, None
+            size: 300, 300
+            pos_hint: {"center_x": 0.5, "top": 0.95}
+
+        TracingWidget:
+            id: tracing_area
+            size_hint: 1, 0.7
+            pos_hint: {"center_x": 0.5, "y": 0.15}
+
+        # Buttons at the bottom
+        Button:
+            text: "Clear"
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.1, "y": 0.02}
+            on_release: root.clear_canvas()
+
+        Button:
+            text: "Back"
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.6, "y": 0.02}
+            on_release: app.root.current = "level_selection"
 
 <NameInputScreen>:
     canvas.before:
@@ -379,3 +453,48 @@
             size: 200, 120
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_press: root.submit_username(username_input.text)
+
+<LevelOneScreen>:
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                source: "image/bg_level1.png"  # Background image for Level 1
+                size: self.size
+                pos: self.pos
+
+        GridLayout:
+            cols: 5
+            spacing: 10
+            padding: [20, 20, 20, 20]
+            size_hint: 0.9, 0.7
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+            Button:
+                background_normal: "image/bab1/huruf/a.png"
+                background_down: "alphabet_images/A_pressed.png"
+                size_hint: None, None
+                size: 100, 100
+                on_release: root.play_sound("image/voice_ alfabet/huruf_A.mp3")
+
+            Button:
+                background_normal: "alphabet_images/B.png"
+                background_down: "alphabet_images/B_pressed.png"
+                size_hint: None, None
+                size: 100, 100
+                on_release: root.play_sound("sounds/B.mp3")
+
+            # Repeat for all letters C-Z
+            Button:
+                background_normal: "alphabet_images/C.png"
+                background_down: "alphabet_images/C_pressed.png"
+                size_hint: None, None
+                size: 100, 100
+                on_release: root.play_sound("sounds/C.mp3")
+
+        Button:
+            text: "Back"
+            size_hint: None, None
+            size: 120, 50
+            pos_hint: {"x": 0.02, "y": 0.02}
+            background_color: app.rgb(217, 162, 67)
+            on_release: app.go_back_to_level_selection()

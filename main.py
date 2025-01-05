@@ -3,8 +3,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from input import NameInputScreen
 from start import StartScreen
 from menu import GameScreen
-# from menu import LevelSelectionScreen
 from draw import PaintScreen
+from mengenal_abc import Game1Screen
+from tracing import TracingScreen
 from kivy.core.audio import SoundLoader
   
 
@@ -25,9 +26,10 @@ class PaintApp(App):
         sm = ScreenManager()
         # sm.add_widget(NameInputScreen(name="name_input"))
         # sm.add_widget(StartScreen(name="start"))
-        # sm.add_widget(GameScreen(name="game"))
-        # sm.add_widget(LevelSelectionScreen(name="level_selection"))
-        sm.add_widget(PaintScreen(name="paint"))
+        sm.add_widget(GameScreen(name="game"))
+        sm.add_widget(Game1Screen(name="game1"))
+        sm.add_widget(TracingScreen(name="tracing"))
+        # sm.add_widget(PaintScreen(name="paint"))
         return sm
     
     def on_stop(self):
