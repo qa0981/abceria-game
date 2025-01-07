@@ -3,9 +3,11 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+from kivy.uix.image import Image
 from kivy.core.audio import SoundLoader
 from kivy.properties import StringProperty
 import string
+from kivy.graphics import Rectangle, Color
 
 
 class Game1Screen(Screen):
@@ -21,12 +23,12 @@ class Game1Screen(Screen):
         title_bar.add_widget(back_button)
         layout.add_widget(title_bar)
 
-        grid = GridLayout(cols=8, spacing=10, padding=20)
+        grid = GridLayout(cols=7, spacing=10, padding=20)
         for index, letter in enumerate(string.ascii_uppercase, start=1):
             image_path = f"image/huruf/button/{letter}.png"
             sound_path = f"image/voice_ alfabet/{index}.mp3"
             image_button = ImageButton(
-                source=image_path, sound_path=sound_path, size_hint=(220, 190)
+                source=image_path, sound_path=sound_path, size_hint=(0.13, 0.15)
             )
             grid.add_widget(image_button)
         layout.add_widget(grid)
@@ -34,7 +36,7 @@ class Game1Screen(Screen):
         self.add_widget(layout)
 
     def go_back(self, instance):
-        self.manager.current = "game_screen"
+        self.manager.current = "game"
 
 
 class ImageButton(Button):

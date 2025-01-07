@@ -283,50 +283,35 @@
                     on_press: root.start_game5()
 
 <Game1Screen>:
-    BoxLayout:
-        orientation: "vertical"
-
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                source: "image/bg_next.png"
+                size: self.size
+                pos: self.pos
         BoxLayout:
-            size_hint: 1, 0.1
-            padding: 10
+            orientation: "vertical"
 
-            Label:
-                text: "Game 1"
-                font_size: 24
+            BoxLayout:
+                size_hint: 1, 0.1
+                padding: 10
 
-            Button:
-                text: "Back"
-                size_hint: None, None
-                size: 100, 50
-                on_press: root.go_back()
+                Label:
+                    text: "Game 1"
+                    font_size: 24
 
-        GridLayout:
-            cols: 5
-            spacing: 10
-            padding: 20
+                Button:
+                    text: "Back"
+                    size_hint: None, None
+                    size: 100, 50
+                    on_press: root.go_back()
 
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/1.mp3"
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/2.mp3"
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/3.mp3"
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/4.mp3"
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/5.mp3"
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/6.mp3"
-            ImageButton:
-                source: "image/huruf/button/a.png"
-                sound_path: "image/voice_ alfabet/7.mp3"
-            
+        MagicImage:
+            source: "buttons/arrow_left.png"
+            size_hint: None, None
+            size: 100, 100
+            pos_hint: {"x": 0.02, "y": 0.02}
+            on_release: self.wobble_and_navigate(root.go_to_start_menu)
 
 <LevelSelectionPopup>:
     size_hint: 0.8, 0.8
