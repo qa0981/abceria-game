@@ -7,7 +7,7 @@ from draw import PaintScreen
 from mengenal_abc import Game1Screen
 from tracing import TracingScreen
 from kivy.core.audio import SoundLoader
-  
+
 
 class PaintApp(App):
     def __init__(self, **kwargs):
@@ -28,7 +28,7 @@ class PaintApp(App):
         # sm.add_widget(StartScreen(name="start"))
         sm.add_widget(GameScreen(name="game"))
         sm.add_widget(Game1Screen(name="game1"))
-        sm.add_widget(TracingScreen(name="tracing"))
+        sm.add_widget(TracingScreen(name="game2"))
         # sm.add_widget(PaintScreen(name="paint"))
         return sm
     

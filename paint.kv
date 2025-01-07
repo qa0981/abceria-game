@@ -291,27 +291,17 @@
                 pos: self.pos
         BoxLayout:
             orientation: "vertical"
-
-            BoxLayout:
-                size_hint: 1, 0.1
-                padding: 10
-
-                Label:
-                    text: "Game 1"
-                    font_size: 24
-
-                Button:
-                    text: "Back"
-                    size_hint: None, None
-                    size: 100, 50
-                    on_press: root.go_back()
+            size_hint: 0.5, 0.1
+            pos_hint: {"center_x": 0.5, "top": 0.95}
+            padding: [20, 10]
+            spacing: 10
 
         MagicImage:
             source: "buttons/arrow_left.png"
             size_hint: None, None
             size: 100, 100
             pos_hint: {"x": 0.02, "y": 0.02}
-            on_release: self.wobble_and_navigate(root.go_to_start_menu)
+            on_release: self.wobble_and_navigate(root.go_back)
 
 <LevelSelectionPopup>:
     size_hint: 0.8, 0.8
@@ -360,32 +350,95 @@
             on_release: root.dismiss()
 
 <TracingScreen>:
-    name: "tracing"
-
+    name: "letter_screen"
     FloatLayout:
-        Image:
-            source: "image/bab1/jiplak/a.png"
-            size_hint: None, None
-            size: 300, 300
-            pos_hint: {"center_x": 0.5, "top": 0.95}
-
         TracingWidget:
             id: tracing_area
             size_hint: 1, 0.7
             pos_hint: {"center_x": 0.5, "y": 0.15}
 
-        # Buttons at the bottom
+        Button:
+            text: "Next Letter"
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.5, "y": 0.02}
+            on_release: root.go_to_next_letter()
+
         Button:
             text: "Clear"
             size_hint: 0.3, 0.1
             pos_hint: {"x": 0.1, "y": 0.02}
-            on_release: root.clear_canvas()
+            on_release: tracing_area.canvas.clear()
+
+<TracingScreen1>:
+    name: "tracing"
+
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                source: "image/game2.png"
+                size: self.size
+                pos: self.pos
+        Image:
+            source: "image/bab1/jiplak/a.png"
+            size_hint: None, None
+            size: 400, 400
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+        TracingWidget:
+            id: tracing_area
+            size_hint: 1, 0.8
+            line_width: custom_slider.value
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 0.5, 0.4
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+            spacing: 10
+            padding: 10
+
+            CustomSlider:
+                id: custom_slider
+                size_hint: 0.4, None
+                height: 55
+                min: 1
+                max: 10
+                value: 2
 
         Button:
-            text: "Back"
-            size_hint: 0.3, 0.1
-            pos_hint: {"x": 0.6, "y": 0.02}
-            on_release: app.root.current = "level_selection"
+            text: "Clear"
+            size_hint: 0.1, 0.07
+            pos_hint: {"center_x": 0.5, "y": 0.25}
+            on_release: root.clear_canvas()
+
+        MagicImage:
+            source: "buttons/arrow_left.png"
+            size_hint: None, None
+            size: 100, 100
+            pos_hint: {"x": 0.02, "y": 0.02}
+            on_release: self.wobble_and_navigate(root.go_back)
+
+<CustomSlider@Slider>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            source: "buttons/btn3.png"
+            size: self.size
+            pos: self.pos
+
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            source: "buttons/btn2.png"
+            size: (self.width * self.value_normalized, self.height)
+            pos: self.pos
+
+    Image:
+        source: "buttons/btn1.png"
+        size_hint: None, None
+        size: 60, 60
+        pos: root.value_pos[0] - self.width / 2, root.center_y - self.height / 2
 
 <NameInputScreen>:
     canvas.before:

@@ -7,35 +7,29 @@ from kivy.uix.image import Image
 from kivy.core.audio import SoundLoader
 from kivy.properties import StringProperty
 import string
-from kivy.graphics import Rectangle, Color
 
 
 class Game1Screen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        layout = BoxLayout(orientation="vertical")
+        layout = BoxLayout(orientation="vertical", spacing=20, padding=20)
 
-        title_bar = BoxLayout(size_hint=(1, 0.1), padding=10)
-        title_bar.add_widget(Label(text="Game 1", font_size=24))
-        back_button = Button(text="Back", size_hint=(None, None), size=(100, 50))
-        back_button.bind(on_press=self.go_back)
-        title_bar.add_widget(back_button)
-        layout.add_widget(title_bar)
-
-        grid = GridLayout(cols=7, spacing=10, padding=20)
+        grid_container = BoxLayout(size_hint=(0.8, 0.7), pos_hint={"center_x": 0.5, "center_y": 0.5})
+        grid = GridLayout(cols=7, spacing=10, padding=10, size_hint=(1, 1))
         for index, letter in enumerate(string.ascii_uppercase, start=1):
-            image_path = f"image/huruf/button/{letter}.png"
+            image_path = f"image/huruf/btn/{letter}.png"
             sound_path = f"image/voice_ alfabet/{index}.mp3"
             image_button = ImageButton(
                 source=image_path, sound_path=sound_path, size_hint=(0.13, 0.15)
             )
             grid.add_widget(image_button)
-        layout.add_widget(grid)
+        grid_container.add_widget(grid)
+        layout.add_widget(grid_container)
 
         self.add_widget(layout)
 
-    def go_back(self, instance):
+    def go_back(self, instance=None):
         self.manager.current = "game"
 
 
