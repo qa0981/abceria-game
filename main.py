@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
 from input import NameInputScreen
 from start import StartScreen
@@ -15,6 +16,7 @@ class PaintApp(App):
         self.music_player = None
 
     def build(self):
+        Window.size = (360, 640)
         self.rgb = lambda r, g, b, a=1: (r / 255, g / 255, b / 255, a)
 
         self.music_player = SoundLoader.load("music/backsound1.mp3")
@@ -28,7 +30,10 @@ class PaintApp(App):
         # sm.add_widget(StartScreen(name="start"))
         sm.add_widget(GameScreen(name="game"))
         sm.add_widget(Game1Screen(name="game1"))
-        sm.add_widget(TracingScreen(name="game2"))
+        for number in range(1, 27):
+            sm.add_widget(TracingScreen(name=f"tracing_{number}", letter_number=str(number)))
+
+        sm.current = "game"
         # sm.add_widget(PaintScreen(name="paint"))
         return sm
     

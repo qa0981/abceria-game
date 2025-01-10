@@ -32,19 +32,11 @@ class GameScreen(Screen):
 
     def start_game2(self):
         print("Game 2 clicked!")
-        self.manager.current = "game2"
+        self.manager.current = "tracing_1"
 
     def start_game3(self):
         print("Game 3 clicked!")
         self.manager.current = "game3"
-
-    def start_game4(self):
-        print("Game 4 clicked!")
-        self.manager.current = "game4"
-
-    def start_game5(self):
-        print("Game 5 clicked!")
-        self.manager.current = "game5"
 
     # def show_popup(self):
     #     popup = LevelSelectionPopup()

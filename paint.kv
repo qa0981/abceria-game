@@ -263,25 +263,6 @@
                     size: 320, 200
                     on_press: root.start_game3()
 
-            GridLayout:
-                cols: 2
-                spacing: 40
-                size_hint: None, None
-                size: 660, 180
-                pos_hint: {"center_x": 0.5, "y": 0}
-
-                ClickableImage:
-                    source: "image/menu1.png"
-                    size_hint: None, None
-                    size: 320, 200
-                    on_press: root.start_game4()
-
-                ClickableImage:
-                    source: "image/menu1.png"
-                    size_hint: None, None
-                    size: 320, 200
-                    on_press: root.start_game5()
-
 <Game1Screen>:
     FloatLayout:
         canvas.before:
@@ -350,24 +331,83 @@
             on_release: root.dismiss()
 
 <TracingScreen>:
-    name: "letter_screen"
     FloatLayout:
+        canvas.before:
+            Rectangle:
+                source: f"image/game2.png"
+                size: self.size
+                pos: self.pos
+
+        Image:
+            source: f"image/huruf/huruf_polos/{root.letter_number}.png"
+            size_hint: None, None
+            size: 400, 450
+            pos_hint: {"center_x": 0.5, "center_y": 0.65}
+
         TracingWidget:
             id: tracing_area
-            size_hint: 1, 0.7
-            pos_hint: {"center_x": 0.5, "y": 0.15}
+            size_hint: 1, 0.8
+            pos_hint: {"center_x": 0.5, "top": 1}
+            line_width: custom_slider.value
 
-        Button:
-            text: "Next Letter"
-            size_hint: 0.3, 0.1
-            pos_hint: {"center_x": 0.5, "y": 0.02}
-            on_release: root.go_to_next_letter()
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 0.5, 0.4
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            spacing: 10
+            padding: 10
+
+            CustomSlider:
+                id: custom_slider
+                size_hint: 0.4, None
+                height: 55
+                min: 1
+                max: 10
+                value: 2
 
         Button:
             text: "Clear"
-            size_hint: 0.3, 0.1
-            pos_hint: {"x": 0.1, "y": 0.02}
-            on_release: tracing_area.canvas.clear()
+            size_hint: 0.1, 0.05
+            pos_hint: {"center_x": 0.5, "center_y": 0.1}
+            on_release: root.clear_canvas()
+
+        MagicImage:
+            source: "buttons/arrow_right.png"
+            size_hint: None, None
+            size: 100, 100
+            pos_hint: {"x": 0.95, "y": 0.02}
+            on_release: self.wobble_and_navigate(root.go_to_next_letter)
+
+        MagicImage:
+            source: "buttons/arrow_left.png"
+            size_hint: None, None
+            size: 100, 100
+            pos_hint: {"x": 0.02, "y": 0.02}
+            on_release: self.wobble_and_navigate(root.go_back)
+
+<CustomSlider@Slider>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            source: "buttons/btn3.png"
+            size: self.size
+            pos: self.pos
+
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            source: "buttons/btn2.png"
+            size: (self.width * self.value_normalized, self.height)
+            pos: self.pos
+
+    Image:
+        source: "buttons/btn1.png"
+        size_hint: None, None
+        size: 60, 60
+        pos: root.value_pos[0] - self.width / 2, root.center_y - self.height / 2
+
 
 <TracingScreen1>:
     name: "tracing"

@@ -2,7 +2,8 @@ from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.widget import Widget
 from kivy.graphics import Line, Color, Rectangle
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, StringProperty
+from kivy.core.window import Window
 
 
 class TracingWidget(Widget):
@@ -10,7 +11,7 @@ class TracingWidget(Widget):
 
     def on_touch_down(self, touch):
         with self.canvas:
-            Color(0, 0, 1, 1)  # Blue color
+            Color(0, 0, 1, 1)
             touch.ud["line"] = Line(points=(touch.x, touch.y), width=self.line_width)
 
     def on_touch_move(self, touch):
@@ -19,27 +20,18 @@ class TracingWidget(Widget):
 
 
 class TracingScreen(Screen):
-    letter = ""
+    letter_number = StringProperty("1")
 
-    def set_letter(self, letter):
-        self.letter = letter
-        self.ids.tracing_area.canvas.clear()  # Clear any previous lines
-        
-        # Load the image for the current letter
-        image_path = f"image/huruf/huruf_polos/letter_{self.letter}.png"
-        try:
-            with self.ids.tracing_area.canvas:
-                Color(1, 1, 1, 1)  # White color for background
-                self.ids.tracing_area.canvas.add(Rectangle(source=image_path, size=self.size, pos=self.pos))
-        except Exception as e:
-            print(f"Error loading image: {e}")
+    def on_enter(self):
+        self.ids.tracing_area.canvas.clear()
+        self.ids.label.font_size = Window.width * 0.1
 
     def go_to_next_letter(self):
-        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        current_index = letters.index(self.letter)
-        next_letter = letters[(current_index + 1) % len(letters)]
-        self.manager.get_screen(next_letter).set_letter(next_letter)
-        self.manager.current = next_letter
+        next_letter = int(self.letter_number) + 1
+        if next_letter > 52:
+            next_letter = 1
+        self.letter_number = str(next_letter)
+        self.manager.current = f"tracing_{next_letter}"
 
     def clear_canvas(self):
         self.ids.tracing_area.canvas.clear()

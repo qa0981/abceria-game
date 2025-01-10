@@ -21,7 +21,7 @@ class Game1Screen(Screen):
             image_path = f"image/huruf/btn/{letter}.png"
             sound_path = f"image/voice_ alfabet/{index}.mp3"
             image_button = ImageButton(
-                source=image_path, sound_path=sound_path, size_hint=(0.13, 0.15)
+                source=image_path, sound_path=sound_path, size_hint=(0.15, 0.15)
             )
             grid.add_widget(image_button)
         grid_container.add_widget(grid)
