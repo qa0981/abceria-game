@@ -3,7 +3,7 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from magic_image import MagicImage
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, NumericProperty
 from kivy.animation import Animation
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
@@ -20,7 +20,7 @@ class ClickableImage(ButtonBehavior, Image):
     pass
 
 class GameScreen(Screen):
-    coin_count = StringProperty("100")
+    score = NumericProperty(0)
     username = StringProperty("Username")
 
     def go_to_start_menu(self):

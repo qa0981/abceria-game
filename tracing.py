@@ -5,6 +5,10 @@ from kivy.graphics import Line, Color, Rectangle
 from kivy.properties import NumericProperty, StringProperty
 from kivy.uix.slider import Slider
 from kivy.properties import ListProperty
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
 
 
 class TracingWidget(Widget):
@@ -39,10 +43,30 @@ class TracingScreen(Screen):
     def clear_canvas(self):
         self.ids.tracing_area.canvas.clear()
 
+    def show_completion_popup(self):
+        # Create the content of the pop-up
+        content = BoxLayout(orientation="vertical", spacing=10, padding=10)
+        content.add_widget(Label(text="Well done! You completed the tracing!"))
+
+        # Add a button to go back
+        back_button = Button(text="Go Back", size_hint=(1, 0.3))
+        back_button.bind(on_release=lambda *args: (self.go_back(), popup.dismiss()))
+        content.add_widget(back_button)
+
+        # Create the pop-up
+        popup = Popup(
+            title="Tracing Complete",
+            content=content,
+            size_hint=(0.8, 0.5),
+            auto_dismiss=False,
+        )
+        popup.open()
+
     def go_to_next_letter(self):
         self.ids.tracing_area.check_tracing()
         if self.ids.tracing_area.is_tracing_complete:
             self.score += 3
+            self.show_completion_popup()
         else:
             self.score += 0
 
