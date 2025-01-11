@@ -16,7 +16,7 @@ class PaintApp(App):
         self.music_player = None
 
     def build(self):
-        Window.size = (360, 640)
+        Window.size = (640, 360)
         self.rgb = lambda r, g, b, a=1: (r / 255, g / 255, b / 255, a)
 
         self.music_player = SoundLoader.load("music/backsound1.mp3")

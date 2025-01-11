@@ -10,6 +10,7 @@ from kivy.uix.popup import Popup
 from kivy.app import App
 from kivymd.app import MDApp
 from kivy.lang import Builder
+from kivy.core.window import Window
 
 
 def rgb(r, g, b, a=1):
@@ -25,6 +26,7 @@ class GameScreen(Screen):
     def go_to_start_menu(self):
         print("Returning to start menu")
         self.manager.current = "start"
+        self.ids.label.font_size = Window.width * 0.08
 
     def start_game1(self):
         print("Navigating to Game 1!")

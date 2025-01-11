@@ -24,7 +24,6 @@ class TracingScreen(Screen):
 
     def on_enter(self):
         self.ids.tracing_area.canvas.clear()
-        self.ids.label.font_size = Window.width * 0.1
 
     def go_to_next_letter(self):
         next_letter = int(self.letter_number) + 1
