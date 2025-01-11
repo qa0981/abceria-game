@@ -338,130 +338,126 @@
             color: app.rgb(255, 255, 255)
             on_release: root.dismiss()
 
+#:import Window kivy.core.window.Window
+
 <TracingScreen>:
-    FloatLayout:
-        canvas.before:
-            Rectangle:
-                source: f"image/game2.png"
-                size: self.size
-                pos: self.pos
-
-        Image:
-            source: f"image/huruf/huruf_polos/{root.letter_number}.png"
-            size_hint: None, None
-            size: 180, 150
-            pos_hint: {"center_x": 0.5, "center_y": 0.65}
-
-        TracingWidget:
-            id: tracing_area
-            size_hint: 1, 0.8
-            pos_hint: {"center_x": 0.5, "top": 1}
-            line_width: custom_slider.value
-
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint: 0.3, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            spacing: 10
-            padding: 10
-
-            CustomSlider:
-                id: custom_slider
-                size_hint: 0.4, None
-                height: 55
-                min: 1
-                max: 10
-                value: 2
-
-        Button:
-            text: "Clear"
-            size_hint: 0.09, 0.05
-            pos_hint: {"center_x": 0.5, "center_y": 0.1}
-            on_release: root.clear_canvas()
-
-        MagicImage:
-            source: "buttons/arrow_right.png"
-            size_hint: None, None
-            size: 40, 40
-            pos_hint: {"x": 0.9, "y": 0.02}
-            on_release: self.wobble_and_navigate(root.go_to_next_letter)
-
-        MagicImage:
-            source: "buttons/arrow_left.png"
-            size_hint: None, None
-            size: 40, 40
-            pos_hint: {"x": 0.02, "y": 0.02}
-            on_release: self.wobble_and_navigate(root.go_back)
-
-<CustomSlider@Slider>:
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            source: "buttons/btn3.png"
-            size: 20, 5
-            pos: self.pos
-
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            source: "buttons/btn2.png"
-            size: 60, 5
-            pos: self.pos
-
-    Image:
-        source: "buttons/btn1.png"
-        size_hint: None, None
-        size: 20, 5
-        pos: self.pos
-
-
-<TracingScreen1>:
-    name: "tracing"
-
     FloatLayout:
         canvas.before:
             Rectangle:
                 source: "image/game2.png"
                 size: self.size
                 pos: self.pos
+
         Image:
-            source: "image/bab1/jiplak/a.png"
+            source: f"image/huruf/huruf_polos/{root.letter_number}.png"
             size_hint: None, None
-            size: 400, 400
+            size: Window.width * 0.4, Window.height * 0.3
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+        FloatLayout:
+            size_hint: None, None
+            size: 80, 20
+            pos_hint: {"x": 0.02, "top": 0.98}
+            canvas.before:
+                Color:
+                    rgba: (217 / 255, 162 / 255, 67 / 255, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [10]
+
+            Image:
+                source: "buttons/koin.png"
+                size_hint: None, None
+                size: 18, 18
+                pos_hint: {"x": 0.04, "center_y": 0.5}
+                allow_stretch: True
+
+            Label:
+                text: f"{root.score}"
+                font_size: 14
+                font_name: "fonts/SplashBakery.otf"
+                color: (255 / 255, 222 / 255, 169 / 255, 1)
+                size_hint: None, None
+                size: 80, 50
+                pos_hint: {"x": 0.4, "center_y": 0.5}
+                halign: "left"
+                valign: "middle"
+                text_size: self.size
+
+        FloatLayout:
+            size_hint: None, None
+            size: 80, 20
+            pos_hint: {"right": 0.98, "top": 0.98}
+            canvas.before:
+                Color:
+                    rgba: (217 / 255, 162 / 255, 67 / 255, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [10]
+
+            Image:
+                source: "buttons/tameng.png"
+                size_hint: None, None
+                size: 18, 18
+                pos_hint: {"x": 0.05, "center_y": 0.5}
+                allow_stretch: True
+
+            Label:
+                text: root.username
+                font_size: 14
+                font_name: "fonts/SplashBakery.otf"
+                color: (255 / 255, 222 / 255, 169 / 255, 1)
+                size_hint: None, None
+                size: 80, 50
+                pos_hint: {"x": 0.4, "center_y": 0.5}
+                halign: "left"
+                valign: "middle"
+                text_size: self.size
+
 
         TracingWidget:
             id: tracing_area
-            size_hint: 1, 0.8
+            size_hint: 0.9, 0.6
+            pos_hint: {"center_x": 0.5, "top": 0.9}
             line_width: custom_slider.value
 
         BoxLayout:
             orientation: "horizontal"
-            size_hint: 0.5, 0.4
-            pos_hint: {"center_x": 0.5, "center_y": 0.35}
-            spacing: 10
-            padding: 10
+            size_hint: 0.5, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            spacing: 20
+            padding: [10, 0]
 
             CustomSlider:
                 id: custom_slider
-                size_hint: 0.4, None
-                height: 55
+                size_hint: 0.5, None
+                height: 25
                 min: 1
                 max: 10
                 value: 2
 
         Button:
             text: "Clear"
-            size_hint: 0.1, 0.07
-            pos_hint: {"center_x": 0.5, "y": 0.25}
+            font_size: "22sp"
+            font_name: "fonts/SplashBakery.otf"
+            size_hint: None, None
+            size: Window.width * 0.15, Window.height * 0.05
+            pos_hint: {"center_x": 0.5, "center_y": 0.28}
             on_release: root.clear_canvas()
+
+        MagicImage:
+            source: "buttons/arrow_right.png"
+            size_hint: None, None
+            size: Window.width * 0.05, Window.width * 0.05
+            pos_hint: {"x": 0.9, "y": 0.02}
+            on_release: self.wobble_and_navigate(root.go_to_next_letter)
 
         MagicImage:
             source: "buttons/arrow_left.png"
             size_hint: None, None
-            size: 100, 100
+            size: Window.width * 0.05, Window.width * 0.05
             pos_hint: {"x": 0.02, "y": 0.02}
             on_release: self.wobble_and_navigate(root.go_back)
 
@@ -485,8 +481,9 @@
     Image:
         source: "buttons/btn1.png"
         size_hint: None, None
-        size: 60, 60
+        size: 31, 31
         pos: root.value_pos[0] - self.width / 2, root.center_y - self.height / 2
+
 
 <NameInputScreen>:
     canvas.before:

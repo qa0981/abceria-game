@@ -32,7 +32,6 @@ class PaintApp(App):
         sm.add_widget(Game1Screen(name="game1"))
         for number in range(1, 27):
             sm.add_widget(TracingScreen(name=f"tracing_{number}", letter_number=str(number)))
-
         sm.current = "game"
         # sm.add_widget(PaintScreen(name="paint"))
         return sm
