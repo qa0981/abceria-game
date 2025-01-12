@@ -26,7 +26,6 @@ class GameScreen(Screen):
     def go_to_start_menu(self):
         print("Returning to start menu")
         self.manager.current = "start"
-        self.ids.label.font_size = Window.width * 0.08
 
     def start_game1(self):
         print("Navigating to Game 1!")
@@ -40,29 +39,12 @@ class GameScreen(Screen):
         print("Game 3 clicked!")
         self.manager.current = "game3"
 
-    # def show_popup(self):
-    #     popup = LevelSelectionPopup()
-    #     popup.open()
-
     def update_coin_count(self, new_coin_count):
         self.coin_count = str(new_coin_count)
 
     def update_username(self, new_username):
         self.username = new_username
 
-# class LevelSelectionPopup(Popup):
-#     coin_count = StringProperty("100")
-#     username = StringProperty("Player")
-
-#     def select_level(self, level):
-#         app = App.get_running_app()
-#         if level == 1:
-#             app.root.current = "gameone"
-#         elif level == 2:
-#             app.root.current = "gametwo"
-#         elif level == 3:
-#             app.root.current = "tracing"
-#         self.dismiss()
 class MyApp(MDApp):
     def build(self):
         return Builder.load_file("paint.kv")

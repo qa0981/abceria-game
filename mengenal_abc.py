@@ -9,6 +9,7 @@ from kivy.core.audio import SoundLoader
 from kivy.properties import StringProperty
 import string
 from kivy.core.window import Window
+from kivy.metrics import dp
 
 
 class Game1Screen(Screen):
@@ -22,18 +23,21 @@ class Game1Screen(Screen):
         WindowWidth = Window.width
         cols = 7
         if WindowWidth < 600:
-            cols = 5
+            cols = 5  # Reduce number of columns on small screens
 
-        grid = GridLayout(cols=cols, spacing=6, padding=10, size_hint=(1, 1))
-        
+        grid = GridLayout(cols=cols, spacing=dp(6), padding=dp(10), size_hint=(1, 1))
+
+        # Adjust the size of the buttons based on the screen size
+        button_size = dp(60)  # Set to 60 dp for consistent sizing across devices
+
         for index, letter in enumerate(string.ascii_uppercase, start=1):
             image_path = f"image/huruf/btn/{letter}.png"
-            sound_path = f"image/voice_alfabet/{index}.mp3"
+            sound_path = f"image/voice_ alfabet/{index}.mp3"
             image_button = ImageButton(
-                source=image_path, sound_path=sound_path, size_hint=(None, None), size=(60, 60)
+                source=image_path, sound_path=sound_path, size_hint=(None, None), size=(button_size, button_size)
             )
             grid.add_widget(image_button)
-        
+
         grid_container.add_widget(grid)
         layout.add_widget(grid_container)
 

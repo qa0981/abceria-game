@@ -8,6 +8,9 @@ from draw import PaintScreen
 from mengenal_abc import Game1Screen
 from tracing import TracingScreen
 from kivy.core.audio import SoundLoader
+from kivy.config import Config
+
+Config.set("graphics", "resizable", True)
 
 
 class PaintApp(App):
@@ -26,13 +29,13 @@ class PaintApp(App):
             self.music_player.play()
         
         sm = ScreenManager()
-        # sm.add_widget(NameInputScreen(name="name_input"))
-        # sm.add_widget(StartScreen(name="start"))
+        sm.add_widget(NameInputScreen(name="name_input"))
+        sm.add_widget(StartScreen(name="start"))
         sm.add_widget(GameScreen(name="game"))
         sm.add_widget(Game1Screen(name="game1"))
         for number in range(1, 27):
             sm.add_widget(TracingScreen(name=f"tracing_{number}", letter_number=str(number)))
-        sm.current = "game"
+        sm.current = "start"
         # sm.add_widget(PaintScreen(name="paint"))
         return sm
     

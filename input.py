@@ -16,8 +16,6 @@ class NameInputScreen(Screen):
         self.animate_floating(self.ids.animasi1, base_y=700)
         self.animate_floating(self.ids.animasi2, base_y=60)
 
-        # self.start_slide_animation()
-
     def animate_floating(self, widget, base_y):
         if widget:
 

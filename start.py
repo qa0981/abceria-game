@@ -14,24 +14,26 @@ class ClickableImage(ButtonBehavior, Image):
 
 class StartScreen(Screen):
     def on_enter(self):
-        self.animate_floating(self.ids.animasi1, base_y=700)
-        self.animate_floating(self.ids.animasi2, base_y=60)
-        self.animate_floating(self.ids.animasi3, base_y=550)
+        self.start_animations()
 
-    def animate_floating(self, widget, base_y):
-        if widget:
-
-            widget.y = base_y
-            widget.x = widget.x
-
+    def start_animations(self):
+        anim1 = self.ids.anim1
+        if anim1:
             floating = (
-                Animation(y=base_y + 20, duration=0.6, t="in_out_quad") +
-                Animation(y=base_y - 20, duration=0.6, t="in_out_quad")
+                Animation(y=anim1.y + 20, duration=1, t='in_out_quad') +
+                Animation(y=anim1.y - 20, duration=1, t='in_out_quad')
             )
             floating.repeat = True
-            floating.start(widget)
-        else:
-            print(f"Widget {widget} not found for animation!")
+            floating.start(anim1)
+
+        anim2 = self.ids.anim2
+        if anim2:
+            bouncing = (
+                Animation(y=anim2.y + 30, duration=0.8, t='out_bounce') +
+                Animation(y=anim2.y - 40, duration=0.8, t='out_bounce')
+            )
+            bouncing.repeat = True
+            bouncing.start(anim2)
 
     def on_button_click(self, button_id):
         if button_id == "play":
