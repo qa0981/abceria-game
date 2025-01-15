@@ -71,7 +71,7 @@
                     pos_hint: {"center_x": 0.5}
                     on_release: self.wobble_and_navigate(root.quit_app)
 
-<OptionsPopup@Popup>:
+<OptionsPopup>:
     title: "Options"
     size_hint: 0.7, 0.7
     auto_dismiss: False
@@ -98,9 +98,10 @@
                 id: sound_slider
                 min: 0
                 max: 1
-                value: 0.5
+                value: app.sound_volume
                 step: 0.05
                 size_hint_x: 0.5
+                on_value: root.on_sound_volume_change(self, self.value)
 
         BoxLayout:
             orientation: "horizontal"
@@ -113,10 +114,11 @@
             Slider:
                 id: music_slider
                 min: 0
-                max: 10
-                value: 0.5
+                max: 1
+                value: app.music_volume
                 step: 0.05
                 size_hint_x: 0.5
+                on_value: root.on_music_volume_change(self, self.value)
 
         BoxLayout:
             orientation: "horizontal"
@@ -126,9 +128,7 @@
             Button:
                 text: "Reset to Defaults"
                 size_hint_x: 0.5
-                on_press:
-                    root.ids.sound_slider.value = 0.5
-                    root.ids.music_slider.value = 0.5
+                on_press: root.reset_to_defaults()
 
             Button:
                 text: "Save & Close"

@@ -5,8 +5,11 @@ from kivy.uix.popup import Popup
 from kivy.uix.slider import Slider
 from kivy.lang import Builder
 from kivy.uix.image import Image
+from kivymd.app import MDApp
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.animation import Animation
+from kivy.core.audio import SoundLoader
+from kivy.properties import NumericProperty
 
 class ClickableImage(ButtonBehavior, Image):
     pass
@@ -50,18 +53,36 @@ class StartScreen(Screen):
         print("Exiting app...")
 
     def open_options_popup(self):
-        popup = OptionsPopup()
+        popup = OptionsPopup(app=MDApp.get_running_app())
         popup.open()
 
 class OptionsPopup(Popup):
-    def __init__(self, **kwargs):
+    sound_volume = NumericProperty(0.5)
+    music_volume = NumericProperty(0.5)
+
+    def __init__(self, app, **kwargs):
         super().__init__(**kwargs)
+        self.app = app
+        self.sound_volume = app.sound_volume 
+        self.music_volume = app.music_volume 
+
+    def on_sound_volume_change(self, instance, value):
+        self.app.sound_volume = value
+        if self.app.background_music:
+            self.app.background_music.volume = value
+
+    def on_music_volume_change(self, instance, value):
+        self.app.music_volume = value
+        if self.app.background_music:
+            self.app.background_music.volume = value
 
     def save_settings(self):
-        print("Settings saved")
-
-    def load_settings(self):
-        return 0.5, 0.5
-
-    def reset_settings(self):
-        return 0.5, 0.5
+        print(f"Sound Volume: {self.sound_volume}, Music Volume: {self.music_volume}")
+    
+    def reset_to_defaults(self):
+        self.sound_volume = 0.5
+        self.music_volume = 0.5
+        self.app.sound_volume = 0.5
+        self.app.music_volume = 0.5
+        if self.app.background_music:
+            self.app.background_music.volume = 0.5
