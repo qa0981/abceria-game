@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.widget import Widget
 from kivy.graphics import Line, Color, Rectangle
 from kivy.properties import NumericProperty, StringProperty
+from kivy.core.audio import SoundLoader
 from kivy.uix.slider import Slider
 from kivy.properties import ListProperty
 from kivy.uix.popup import Popup
@@ -36,6 +37,11 @@ class TracingScreen(Screen):
     letter_number = StringProperty("1")
     score = NumericProperty(0)
     username = StringProperty("Username")
+
+    def play_sound(self, sound_path):
+        sound = SoundLoader.load(sound_path)
+        if sound:
+            sound.play()
 
     def on_enter(self):
         self.clear_canvas()
@@ -75,9 +81,11 @@ class TracingScreen(Screen):
             next_letter = 1
         self.letter_number = str(next_letter)
         self.clear_canvas()
+        self.play_sound("music/press-btn-next-back.mp3")
 
     def go_back(self):
         self.manager.current = "game"
+        self.play_sound("music/press-btn-next-back.mp3")
 
 class CustomSlider(Slider):
     knob_position = ListProperty([0, 0])

@@ -16,6 +16,11 @@ class ClickableImage(ButtonBehavior, Image):
 
 
 class StartScreen(Screen):
+    def play_sound(self, sound_path):
+        sound = SoundLoader.load(sound_path)
+        if sound:
+            sound.play()
+
     def on_enter(self):
         self.start_animations()
 
@@ -47,37 +52,50 @@ class StartScreen(Screen):
     def start_game(self):
         self.manager.current = "game"
         print("Starting game...")
+        self.play_sound("music/pop-button.mp3")
 
     def quit_app(self):
         App.get_running_app().stop()
         print("Exiting app...")
+        self.play_sound("music/pop-button.mp3")
 
     def open_options_popup(self):
         popup = OptionsPopup(app=MDApp.get_running_app())
         popup.open()
+        self.play_sound("music/pop-button.mp3")
 
 class OptionsPopup(Popup):
-    def on_music_volume_change(self, instance, value):
-        """Handle music volume changes."""
-        app = App.get_running_app()
-        app.music_volume = value
-        print(f"Music volume updated to: {value}")
-        if app.music_player:  # Assuming there's a music player in the app.
-            app.music_player.volume = value
+    sound_volume = NumericProperty(0.5)
+    music_volume = NumericProperty(0.5)
 
+    def __init__(self, app, **kwargs):
+        super().__init__(**kwargs)
+        self.app = app
+        self.sound_volume = app.sound_volume 
+        self.music_volume = app.music_volume 
+
+    def on_sound_volume_change(self, instance, value):
+        self.app.sound_volume = value
+        if self.app.background_music:
+            self.app.background_music.volume = value
+
+    def on_music_volume_change(self, instance, value):
+        self.app.music_volume = value
+        if self.app.background_music:
+            self.app.background_music.volume = value
+
+    def save_settings(self):
+        print(f"Sound Volume: {self.sound_volume}, Music Volume: {self.music_volume}")
+    
     def reset_to_defaults(self):
-        """Reset settings to default values."""
-        app = App.get_running_app()
-        app.music_volume = 0.5  # Default value
-        self.ids.music_slider.value = app.music_volume
-        if app.music_player:
-            app.music_player.volume = app.music_volume
+        self.sound_volume = 0.5
+        self.music_volume = 0.5
+        self.app.sound_volume = 0.5
+        self.app.music_volume = 0.5
+        if self.app.background_music:
+            self.app.background_music.volume = 0.5
 
 class ImageSlider(Slider):
-    """A custom slider that uses images for the track and handle."""
-
-    # track_image = StringProperty("buttons/bar-volume-ctrl1.png")  # Path for track image
-    # handle_image = StringProperty("buttons/bar-volume-ctrl2.png")  # Path for handle image
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

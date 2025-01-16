@@ -18,8 +18,8 @@ Config.set("graphics", "resizable", True)
 
 class PaintApp(MDApp):
     background_music = None
+    sound_volume = NumericProperty(0.5)
     music_volume = NumericProperty(0.5)
-
 
     def load_background_music(self):
         self.background_music = SoundLoader.load("music/backsound1.mp3")

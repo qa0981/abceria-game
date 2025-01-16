@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.core.audio import SoundLoader
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from magic_image import MagicImage
@@ -23,21 +24,30 @@ class GameScreen(Screen):
     score = NumericProperty(0)
     username = StringProperty("Username")
 
+    def play_sound(self, sound_path):
+        sound = SoundLoader.load(sound_path)
+        if sound:
+            sound.play()
+
     def go_to_start_menu(self):
         print("Returning to start menu")
         self.manager.current = "start"
+        self.play_sound("music/press-btn-next-back.mp3")
 
     def start_game1(self):
         print("Navigating to Game 1!")
         self.manager.current = "game1"
+        self.play_sound("music/pop-button.mp3")
 
     def start_game2(self):
         print("Game 2 clicked!")
         self.manager.current = "tracing_1"
+        self.play_sound("music/pop-button.mp3")
 
     def start_game3(self):
         print("Game 3 clicked!")
         self.manager.current = "game3"
+        self.play_sound("music/pop-button.mp3")
 
     def update_coin_count(self, new_coin_count):
         self.coin_count = str(new_coin_count)
