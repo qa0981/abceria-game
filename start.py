@@ -9,7 +9,7 @@ from kivymd.app import MDApp
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.animation import Animation
 from kivy.core.audio import SoundLoader
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, StringProperty
 
 class ClickableImage(ButtonBehavior, Image):
     pass
@@ -57,32 +57,49 @@ class StartScreen(Screen):
         popup.open()
 
 class OptionsPopup(Popup):
-    sound_volume = NumericProperty(0.5)
-    music_volume = NumericProperty(0.5)
-
-    def __init__(self, app, **kwargs):
-        super().__init__(**kwargs)
-        self.app = app
-        self.sound_volume = app.sound_volume 
-        self.music_volume = app.music_volume 
-
-    def on_sound_volume_change(self, instance, value):
-        self.app.sound_volume = value
-        if self.app.background_music:
-            self.app.background_music.volume = value
-
     def on_music_volume_change(self, instance, value):
-        self.app.music_volume = value
-        if self.app.background_music:
-            self.app.background_music.volume = value
+        """Handle music volume changes."""
+        app = App.get_running_app()
+        app.music_volume = value
+        print(f"Music volume updated to: {value}")
+        if app.music_player:  # Assuming there's a music player in the app.
+            app.music_player.volume = value
 
-    def save_settings(self):
-        print(f"Sound Volume: {self.sound_volume}, Music Volume: {self.music_volume}")
-    
     def reset_to_defaults(self):
-        self.sound_volume = 0.5
-        self.music_volume = 0.5
-        self.app.sound_volume = 0.5
-        self.app.music_volume = 0.5
-        if self.app.background_music:
-            self.app.background_music.volume = 0.5
+        """Reset settings to default values."""
+        app = App.get_running_app()
+        app.music_volume = 0.5  # Default value
+        self.ids.music_slider.value = app.music_volume
+        if app.music_player:
+            app.music_player.volume = app.music_volume
+
+class ImageSlider(Slider):
+    """A custom slider that uses images for the track and handle."""
+
+    # track_image = StringProperty("buttons/bar-volume-ctrl1.png")  # Path for track image
+    # handle_image = StringProperty("buttons/bar-volume-ctrl2.png")  # Path for handle image
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(value=self.update_canvas)  # Update canvas when value changes
+
+    def update_canvas(self, *args):
+        """Redraw the slider with custom images for track and handle."""
+        self.canvas.clear()
+
+        # Draw the track using the track image
+        with self.canvas.before:
+            self.track = Image(source=self.track_image, pos=self.pos, size=(self.width, self.height))
+
+        # Draw the handle using the handle image
+        with self.canvas:
+            handle_x = self.x + (self.value_normalized * self.width) - (self.height / 2)  # Position based on slider value
+            self.handle = Image(source=self.handle_image, pos=(handle_x, self.y), size=(self.height, self.height))
+
+    def on_size(self, *args):
+        """Ensure the track and handle are redrawn when the size changes."""
+        self.update_canvas()
+
+    def on_pos(self, *args):
+        """Ensure the track and handle are redrawn when the position changes."""
+        self.update_canvas()

@@ -86,23 +86,7 @@
             size_hint_y: None
             height: 50
 
-        BoxLayout:
-            orientation: "horizontal"
-            spacing: 10
-            size_hint_y: None
-            height: 50
-            Label:
-                text: "Sound Volume"
-                size_hint_x: 0.5
-            Slider:
-                id: sound_slider
-                min: 0
-                max: 1
-                value: app.sound_volume
-                step: 0.05
-                size_hint_x: 0.5
-                on_value: root.on_sound_volume_change(self, self.value)
-
+        # Music Volume Slider
         BoxLayout:
             orientation: "horizontal"
             spacing: 10
@@ -111,15 +95,18 @@
             Label:
                 text: "Music Volume"
                 size_hint_x: 0.5
-            Slider:
+            ImageSlider:
                 id: music_slider
                 min: 0
                 max: 1
                 value: app.music_volume
                 step: 0.05
                 size_hint_x: 0.5
+                track_image: 'buttons/bar-volume-ctrl1.png'
+                handle_image: 'buttons/bar-volume-ctrl2.png'
                 on_value: root.on_music_volume_change(self, self.value)
 
+        # Action Buttons
         BoxLayout:
             orientation: "horizontal"
             spacing: 20
@@ -133,6 +120,24 @@
             Button:
                 text: "Save & Close"
                 size_hint_x: 0.5
+                on_press: root.dismiss()
+
+        # Single Button used for both actions (Reset & Save)
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 20
+            size_hint_y: None
+            height: 50
+            Button:
+                size_hint_x: 0.7
+                background_normal: 'buttons/btn-reset.png'  # Image for the button when normal
+                background_down: 'buttons/btn-reset.png'  # Image for the button when pressed
+                on_press: root.reset_to_defaults()
+
+            Button:
+                size_hint_x: 0.5
+                background_normal: 'buttons/btn-save.png'  # Same image for both buttons
+                background_down: 'buttons/btn-save.png'  # Same image for both buttons
                 on_press: root.dismiss()
 
 <GameScreen>:

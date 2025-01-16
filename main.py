@@ -18,7 +18,6 @@ Config.set("graphics", "resizable", True)
 
 class PaintApp(MDApp):
     background_music = None
-    sound_volume = NumericProperty(0.5)
     music_volume = NumericProperty(0.5)
 
 
