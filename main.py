@@ -7,6 +7,7 @@ from menu import GameScreen
 from draw import PaintScreen
 from mengenal_abc import Game1Screen
 from tracing import TracingScreen
+from kuis import TebakHurufScreen
 from kivy.core.audio import SoundLoader
 from kivymd.app import MDApp
 from kivy.config import Config
@@ -41,8 +42,9 @@ class PaintApp(MDApp):
         sm.add_widget(Game1Screen(name="game1"))
         for number in range(1, 27):
             sm.add_widget(TracingScreen(name=f"tracing_{number}", letter_number=str(number)))
-        sm.current = "start"
-        # sm.add_widget(PaintScreen(name="paint"))
+        sm.add_widget(TebakHurufScreen(name="kuis"))
+        
+        sm.current = "kuis"
         return sm
     
     def set_music_volume(self, volume):

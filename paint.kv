@@ -462,6 +462,56 @@
         size: 31, 31
         pos: root.value_pos[0] - self.width / 2, root.center_y - self.height / 2
 
+<TebakHurufScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 20
+        padding: 20
+
+        # Label for instructions
+        Label:
+            id: instruction_label
+            text: "Listen to the sound and choose the correct answer!"
+            font_size: 24
+            size_hint: 1, 0.2
+
+        # Button to play sound
+        Button:
+            id: play_sound_button
+            text: "Play Sound"
+            size_hint: 1, 0.2
+            on_press: root.play_sound(self)
+
+        # Choices layout
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+            size_hint: 1, 0.6
+
+            # Creating 4 answer buttons
+            ImageButton:
+                size_hint: None, None
+                size: 100, 100
+                allow_stretch: True
+                on_press: root.check_answer(self)
+
+            ImageButton:
+                size_hint: None, None
+                size: 100, 100
+                allow_stretch: True
+                on_press: root.check_answer(self)
+
+            ImageButton:
+                size_hint: None, None
+                size: 100, 100
+                allow_stretch: True
+                on_press: root.check_answer(self)
+
+            ImageButton:
+                size_hint: None, None
+                size: 100, 100
+                allow_stretch: True
+                on_press: root.check_answer(self)
 
 <NameInputScreen>:
     canvas.before:

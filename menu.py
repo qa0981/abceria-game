@@ -46,7 +46,7 @@ class GameScreen(Screen):
 
     def start_game3(self):
         print("Game 3 clicked!")
-        self.manager.current = "game3"
+        self.manager.current = "kuis"
         self.play_sound("music/pop-button.mp3")
 
     def update_coin_count(self, new_coin_count):
