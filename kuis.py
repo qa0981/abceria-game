@@ -10,7 +10,6 @@ from kivy.animation import Animation
 from random import shuffle
 
 class ImageButton(ButtonBehavior, Image):
-
     correct = False
 
     def __init__(self, **kwargs):
@@ -21,8 +20,8 @@ questions = [
         "sound": "image/voice_ alfabet/3.mp3",
         "correct_answer": "A",
         "choices": [
-            {"image": "image/huruf/tebak_huruf/letter-c.png", "correct": False},
-            {"image": "image/huruf/tebak_huruf/letter-a.png", "correct": True},
+            {"image": "image/huruf/tebak_huruf/letter-c.png", "correct": True},
+            {"image": "image/huruf/tebak_huruf/letter-a.png", "correct": False},
             {"image": "image/huruf/tebak_huruf/letter-k.png", "correct": False},
             {"image": "image/huruf/tebak_huruf/letter-m.png", "correct": False},
         ],
@@ -57,7 +56,6 @@ questions = [
             {"image": "image/huruf/tebak_huruf/letter-q.png", "correct": False},
         ],
     },
-    
 ]
 
 class TebakHurufScreen(Screen):
@@ -68,33 +66,22 @@ class TebakHurufScreen(Screen):
         self.correct_answer = None
         self.sound = None
 
-        # Main layout
-        self.layout = BoxLayout(orientation="vertical", spacing=20, padding=20)
+        self.layout = BoxLayout(orientation="vertical", spacing=20, padding=20, size_hint=(1, 1))
+        self.layout.add_widget(Label(text="Listen to the sound and choose the correct answer!", font_size=24, size_hint=(1, 0.2)))
 
-        # Label for instructions
-        self.instruction_label = Label(
-            text="Listen to the sound and choose the correct answer!",
-            font_size=24,
-            size_hint=(1, 0.2)
-        )
-        self.layout.add_widget(self.instruction_label)
-
-        # Button to play sound
-        self.play_sound_button = Button(
-            text="Play Sound",
-            size_hint=(1, 0.2),
+        self.play_sound_button = ImageButton(
+            source="image/voice4.png",
+            size_hint=(0.4, 0.2),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5},
+            allow_stretch=True,
             on_press=self.play_sound
         )
         self.layout.add_widget(self.play_sound_button)
 
-        self.choices_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, 0.6))
+        self.choices_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(0.7, 0.6), pos_hint={'center_x': 0.5, 'center_y': 0.5})
         self.choice_buttons = []
         for _ in range(4):
-            btn = ImageButton(
-                size_hint=(None, None),
-                size=(100, 100),
-                allow_stretch=True
-            )
+            btn = ImageButton(size_hint=(0.4, 0.4), pos_hint={'center_x': 0.5, 'center_y': 0.5}, allow_stretch=True)
             btn.bind(on_press=self.check_answer)
             self.choice_buttons.append(btn)
             self.choices_layout.add_widget(btn)
@@ -102,81 +89,70 @@ class TebakHurufScreen(Screen):
         self.layout.add_widget(self.choices_layout)
         self.add_widget(self.layout)
 
-        # Load the first question immediately
-        self.load_next_question()
-
-    def load_questions(self, questions):
-        self.questions = questions
-        self.current_question_index = 0
         self.load_next_question()
 
     def load_next_question(self):
-        """
-        Load the next question from the list.
-        """
+
         if self.current_question_index < len(self.questions):
             question = self.questions[self.current_question_index]
             self.sound = SoundLoader.load(question["sound"])
             self.correct_answer = question["correct_answer"]
 
-            # Shuffle choices
             choices = question["choices"]
             shuffle(choices)
             for i, btn in enumerate(self.choice_buttons):
                 btn.source = choices[i]["image"]
                 btn.correct = choices[i]["correct"]
 
-            self.instruction_label.text = f"Question {self.current_question_index + 1} of {len(self.questions)}"
+            self.layout.children[0].text = f"Question {self.current_question_index + 1} of {len(self.questions)}"
         else:
-            # End of the quiz
-            self.instruction_label.text = "Quiz Completed! 🎉"
+            self.layout.children[0].text = "Quiz Completed! 🎉"
             self.play_sound_button.disabled = True
             for btn in self.choice_buttons:
                 btn.disabled = True
 
     def play_sound(self, instance):
-        """
-        Play the sound for the current question.
-        """
         if self.sound:
             self.sound.play()
 
     def check_answer(self, instance):
-        """
-        Validate the chosen answer.
-        """
-        print(f"Checking answer: {'Correct' if instance.correct else 'Incorrect'}")
+
         if instance.correct:
             self.show_popup("Correct!", "You selected the right answer!")
+            self.play_correct_sound()
         else:
             self.wrong_answer_animation(instance)
-            self.instruction_label.text = "Try Again! 😢"
+            self.layout.children[0].text = "Try Again! 😢"
 
-        # Move to the next question after a short delay
+    def show_popup(self, title, message):
+
+        popup = Popup(
+            title=title,
+            content=Label(text=message, halign="center", valign="middle"),
+            size_hint=(0.6, 0.4)
+        )
+        popup.bind(on_dismiss=self.next_question)
+        popup.open()
+
+    def next_question(self, instance):
+ 
         self.current_question_index += 1
         self.load_next_question()
 
-    def show_popup(self, title, message):
-        """
-        Display a pop-up when the answer is correct.
-        """
-        print(f"Displaying popup: {title}")
-        popup = Popup(
-            title=title,
-            content=Label(text=message),
-            size_hint=(0.6, 0.4)
-        )
-        popup.open()
+    def play_correct_sound(self):
+
+        correct_sound = SoundLoader.load("music/correct.mp3")
+        if correct_sound:
+            correct_sound.play()
 
     def wrong_answer_animation(self, btn):
-        """
-        Trigger animation (wiggle) and sound for the wrong answer.
-        """
-        print("Starting wrong answer animation")
-        animation = Animation(x=btn.x + 10, duration=0.1) + Animation(x=btn.x - 10, duration=0.1)
+        animation = (
+            Animation(x=btn.x + 15, duration=0.1) +
+            Animation(x=btn.x - 15, duration=0.1) +
+            Animation(x=btn.x, duration=0.1)
+        )
         animation.start(btn)
 
-        # Play wrong answer sound
-        wrong_sound = SoundLoader.load("music/wrong.mp3")  # You can set your own wrong sound here
+        wrong_sound = SoundLoader.load("music/wrong.mp3")
         if wrong_sound:
             wrong_sound.play()
