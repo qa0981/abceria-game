@@ -38,7 +38,7 @@ questions = [
     },
     {
         "sound": "image/voice_ alfabet/12.mp3",
-        "correct_answer": "B",
+        "correct_answer": "C",
         "choices": [
             {"image": "image/huruf/tebak_huruf/letter-j.png", "correct": False},
             {"image": "image/huruf/tebak_huruf/letter-h.png", "correct": False},
@@ -48,12 +48,22 @@ questions = [
     },
     {
         "sound": "image/voice_ alfabet/20.mp3",
-        "correct_answer": "B",
+        "correct_answer": "D",
         "choices": [
             {"image": "image/huruf/tebak_huruf/letter-t.png", "correct": True},
             {"image": "image/huruf/tebak_huruf/letter-m.png", "correct": False},
             {"image": "image/huruf/tebak_huruf/letter-o.png", "correct": False},
             {"image": "image/huruf/tebak_huruf/letter-q.png", "correct": False},
+        ],
+    },
+    {
+        "sound": "image/voice_ alfabet/5.mp3",
+        "correct_answer": "E",
+        "choices": [
+            {"image": "image/huruf/tebak_huruf/letter-f.png", "correct": False},
+            {"image": "image/huruf/tebak_huruf/letter-e.png", "correct": True},
+            {"image": "image/huruf/tebak_huruf/letter-h.png", "correct": False},
+            {"image": "image/huruf/tebak_huruf/letter-u.png", "correct": False},
         ],
     },
 ]
@@ -71,7 +81,7 @@ class TebakHurufScreen(Screen):
 
         self.play_sound_button = ImageButton(
             source="image/voice4.png",
-            size_hint=(0.4, 0.2),
+            size_hint=(0.6, 0.2),
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             allow_stretch=True,
             on_press=self.play_sound
@@ -156,3 +166,7 @@ class TebakHurufScreen(Screen):
         wrong_sound = SoundLoader.load("music/wrong.mp3")
         if wrong_sound:
             wrong_sound.play()
+
+    def go_back(self, instance=None):
+        self.manager.current = "game"
+        self.play_sound("music/pop-button.mp3")

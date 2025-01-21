@@ -86,7 +86,6 @@
             size_hint_y: None
             height: 50
 
-        # Music Volume Slider
         BoxLayout:
             orientation: "horizontal"
             spacing: 10
@@ -469,6 +468,20 @@
                 source: "image/game3.png"
                 size: self.size
                 pos: self.pos
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 0.5, 0.1
+            pos_hint: {"center_x": 0.3, "top": 0.1}
+            padding: [20, 10]
+            spacing: 10
+
+        MagicImage:
+            source: "buttons/arrow_left.png"
+            size_hint: None, None
+            size: dp(40), dp(40)
+            pos_hint: {"x": 0.02, "y": 0.02}
+            on_release: self.wobble_and_navigate(root.go_back)
 
 <NameInputScreen>:
     canvas.before:

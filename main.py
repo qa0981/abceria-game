@@ -44,7 +44,7 @@ class PaintApp(MDApp):
             sm.add_widget(TracingScreen(name=f"tracing_{number}", letter_number=str(number)))
         sm.add_widget(TebakHurufScreen(name="kuis"))
         
-        sm.current = "kuis"
+        sm.current = "game1"
         return sm
     
     def set_music_volume(self, volume):
