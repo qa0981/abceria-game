@@ -42,18 +42,14 @@ class PaintApp(MDApp):
         sm.add_widget(Game1Screen(name="game1"))
         for number in range(1, 27):
             sm.add_widget(TracingScreen(name=f"tracing_{number}", letter_number=str(number)))
-<<<<<<< Updated upstream
+
         sm.add_widget(TebakHurufScreen(name="kuis"))
         
-<<<<<<< HEAD
-        sm.current = "kuis"
-=======
         sm.current = "name_input"
         # sm.add_widget(PaintScreen(name="paint"))
->>>>>>> Stashed changes
-=======
+
         sm.current = "game1"
->>>>>>> origin/main
+
         return sm
     
     def set_music_volume(self, volume):
