@@ -56,7 +56,7 @@ jobs:
 
     - name: Install kivy-deps.angle
       run: |
-        pip install kivy-deps.angle
+        pip install kivy-deps.angle==0.3.0
     
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1
