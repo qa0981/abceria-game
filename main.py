@@ -45,11 +45,15 @@ class PaintApp(MDApp):
 <<<<<<< Updated upstream
         sm.add_widget(TebakHurufScreen(name="kuis"))
         
+<<<<<<< HEAD
         sm.current = "kuis"
 =======
         sm.current = "name_input"
         # sm.add_widget(PaintScreen(name="paint"))
 >>>>>>> Stashed changes
+=======
+        sm.current = "game1"
+>>>>>>> origin/main
         return sm
     
     def set_music_volume(self, volume):
