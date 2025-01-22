@@ -3,11 +3,13 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.switch import Switch
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.core.audio import SoundLoader
 from kivy.properties import StringProperty
 from kivy.uix.popup import Popup
+from kivy.app import App
 import string
 from kivy.core.window import Window
 from kivy.metrics import dp
@@ -15,12 +17,25 @@ from kivy.metrics import dp
 
 class Game1Screen(Screen):
     popup_content = FloatLayout()
+    background_sound_active = True 
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.sound = None
 
         layout = FloatLayout()
+
+        settings_button = Button(
+            size_hint=(None, None),
+            size=(dp(40), dp(40)),  # Adjust size of the button
+            pos_hint={"right": 1, "top": 1},  # Align to top-right corner
+            background_normal="image/pause.png",  # Replace with your settings icon image
+            background_down="image/pause.png",  # Optional: pressed version of the image
+            border=(0, 0, 0, 0),
+        )
+        settings_button.bind(on_press=self.open_settings)
+        layout.add_widget(settings_button)
+
         grid_container = BoxLayout(size_hint=(0.8, 0.7), pos_hint={"center_x": 0.53, "center_y": 0.49})
 
         WindowWidth = Window.width
@@ -122,6 +137,80 @@ class Game1Screen(Screen):
     def go_back(self, instance=None):
         self.manager.current = "game"
         self.play_sound("music/pop-button.mp3")
+
+    def open_settings(self, instance):
+        # FloatLayout for absolute positioning
+        settings_content = FloatLayout()
+
+        # Background image for the settings popup
+        settings_background = Image(
+            source="buttons/setting-popup.png",  # Replace with your background image for the settings popup
+            size_hint=(1, 1),
+            allow_stretch=True,
+        )
+        settings_content.add_widget(settings_background)
+
+        # Label for the switch
+        sound_label = Label(
+            text="Background Sound",
+            font_size=dp(18),
+            font_name="fonts/SplashBakery.otf",
+            bold=True,
+            color=(1, 1, 1, 1),
+            size_hint=(None, None),
+            size=(dp(200), dp(50)),
+            pos=(dp(50), dp(120)),  # Adjust position
+        )
+        settings_content.add_widget(sound_label)
+
+        # Switch to toggle background sound
+        sound_switch = Switch(
+            active=self.background_sound_active,  # Track the state of the sound
+            size_hint=(None, None),
+            size=(dp(50), dp(30)),
+            pos=(dp(220), dp(125)),  # Adjust position
+        )
+        sound_switch.bind(active=self.toggle_background_sound)
+        settings_content.add_widget(sound_switch)
+
+        # Close button for settings popup
+        close_button = Button(
+            size_hint=(None, None),
+            size=(dp(60), dp(40)),
+            pos_hint={"center_x": 0.5, "y": 0.05},  # Center at the bottom of the popup
+            background_normal="buttons/btn_ok.png",
+            background_down="buttons/btn_ok.png",
+            border=(0, 0, 0, 0),
+        )
+        close_button.bind(on_press=self.close_settings_popup)
+        settings_content.add_widget(close_button)
+
+        # Settings popup
+        self.settings_popup = Popup(
+            title="",
+            content=settings_content,
+            size_hint=(None, None),
+            size=(dp(300), dp(200)),  # Adjust popup size
+            auto_dismiss=False,
+            background="",  # Remove default popup background
+        )
+        self.settings_popup.open()
+
+    def close_settings_popup(self, instance):
+        self.settings_popup.dismiss()
+
+    def toggle_background_sound(self, instance, value):
+        """Toggle background sound on/off based on the switch."""
+        app = App.get_running_app()  # Get the main app instance
+        self.background_sound_active = value  # Update the local state
+
+        if app.background_music:
+            if value:  # If the switch is ON
+                app.background_music.play()
+                print("Background sound enabled")
+            else:  # If the switch is OFF
+                app.background_music.stop()
+                print("Background sound disabled")
 
 
 class ImageButton(Button):

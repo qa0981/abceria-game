@@ -16,7 +16,6 @@ from kivy.properties import NumericProperty
 
 Config.set("graphics", "resizable", True)
 
-
 class PaintApp(MDApp):
     background_music = None
     sound_volume = NumericProperty(0.5)
@@ -46,10 +45,13 @@ class PaintApp(MDApp):
         sm.add_widget(TebakHurufScreen(name="kuis"))
         
         sm.current = "name_input"
+<<<<<<< Updated upstream
         # sm.add_widget(PaintScreen(name="paint"))
 
         sm.current = "game1"
 
+=======
+>>>>>>> Stashed changes
         return sm
     
     def set_music_volume(self, volume):
